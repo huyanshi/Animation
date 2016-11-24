@@ -16,6 +16,8 @@
 		9043AAC71DE6B5400015C6D5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9043AAC61DE6B5400015C6D5 /* HomeViewController.swift */; };
 		9043AAC91DE6B5C70015C6D5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9043AAC81DE6B5C70015C6D5 /* BaseViewController.swift */; };
 		9043AAD21DE6B9820015C6D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9043AAD01DE6B9820015C6D5 /* Main.storyboard */; };
+		9043AAD41DE6BBFD0015C6D5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9043AAD31DE6BBFD0015C6D5 /* Constant.swift */; };
+		9043AAF31DE6C35F0015C6D5 /* FloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9043AAF21DE6C35F0015C6D5 /* FloViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		9043AAC61DE6B5400015C6D5 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9043AAC81DE6B5C70015C6D5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9043AAD11DE6B9820015C6D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = AnimationDemo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		9043AAD31DE6BBFD0015C6D5 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		9043AAF21DE6C35F0015C6D5 /* FloViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,7 @@
 		9043AA8E1DE6B34C0015C6D5 /* AnimationDemo */ = {
 			isa = PBXGroup;
 			children = (
+				9043AAF41DE6C7920015C6D5 /* Tool */,
 				9043AAC21DE6B4BB0015C6D5 /* Common */,
 				9043AABD1DE6B4950015C6D5 /* Base */,
 				9043AAC01DE6B4AC0015C6D5 /* Model */,
@@ -141,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				9043AAC61DE6B5400015C6D5 /* HomeViewController.swift */,
+				9043AAF21DE6C35F0015C6D5 /* FloViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -162,6 +168,7 @@
 		9043AAC21DE6B4BB0015C6D5 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				9043AAD31DE6BBFD0015C6D5 /* Constant.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -175,6 +182,21 @@
 				9043AAC41DE6B50C0015C6D5 /* Info.plist */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		9043AAF41DE6C7920015C6D5 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				9043AAF51DE6C7920015C6D5 /* Source */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		9043AAF51DE6C7920015C6D5 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,6 +335,8 @@
 				9043AA901DE6B34C0015C6D5 /* AppDelegate.swift in Sources */,
 				9043AAC71DE6B5400015C6D5 /* HomeViewController.swift in Sources */,
 				9043AAC91DE6B5C70015C6D5 /* BaseViewController.swift in Sources */,
+				9043AAD41DE6BBFD0015C6D5 /* Constant.swift in Sources */,
+				9043AAF31DE6C35F0015C6D5 /* FloViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
