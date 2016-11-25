@@ -15,3 +15,4 @@ let SCREENW = UIScreen.mainScreen().bounds.size.width
 let SCREENH = UIScreen.mainScreen().bounds.size.height
 /// 屏幕三围
 let SCREENBOUNDS = UIScreen.mainScreen().bounds
+
