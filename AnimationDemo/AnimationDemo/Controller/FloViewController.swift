@@ -12,6 +12,7 @@ import UIKit
 class FloViewController: BaseViewController {
     
     var counterView:CounterView!
+    var coutainerView:CoutainerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +34,12 @@ class FloViewController: BaseViewController {
             make.width.height.equalTo(100)
             make.bottom.equalTo(subtractBtn.snp_top).offset(-40)
         }
-        counterView = CounterView()
-        view.addSubview(counterView)
-        counterView.snp_makeConstraints { (make) -> Void in
+        coutainerView = CoutainerView()
+        view.addSubview(coutainerView)
+        coutainerView.snp_makeConstraints { (make) -> Void in
             make.centerX.equalTo(0)
-            make.width.height.equalTo(230)
-            make.top.equalTo(180)
+            make.width.height.equalTo(300)
+            make.top.equalTo(100)
             
         }
                 // Do any additional setup after loading the view.
@@ -51,9 +52,12 @@ class FloViewController: BaseViewController {
     
     func btnPushButton(button:PushButtonView) {
         if button.isAddButton {
-            counterView.counter++
+            coutainerView.counter++
         }else {
-            counterView.counter--
+            coutainerView.counter--
+        }
+        if coutainerView.isGraphViewShowing {
+            coutainerView.counterViewTap()
         }
     }
 

@@ -12,7 +12,7 @@ class CoutainerView: UIView {
     
     private var counterView:CounterView!
     private var graphView:GraphView!
-    private var isGraphViewShowing = false
+    var isGraphViewShowing = false
     
     var counter:Int = 0{
         didSet {
@@ -22,12 +22,14 @@ class CoutainerView: UIView {
     
     init(){
         super.init(frame: CGRectZero)
+        setSubview()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     private func setSubview(){
+        backgroundColor = UIColor.yellowColor()
         counterView = CounterView()
         graphView = GraphView()
         addSubview(graphView)
