@@ -76,6 +76,49 @@ class GraphView: UIView {
             let nextPoint = CGPoint(x: columnXPoint(i), y: columnYPoint(graphPoints[i]))
                 graphPath.addLineToPoint(nextPoint)
         }
+        graphPath.lineWidth = 2.0
         graphPath.stroke()
+        //保存当前上下文状态
+        CGContextSaveGState(context)
+        // 一下代码是上下文剪裁的区域
+        var clippingPath = graphPath.copy() as! UIBezierPath
+        
+        clippingPath.addLineToPoint(CGPoint(x: columnXPoint(graphPoints.count-1), y: height))
+        clippingPath.addLineToPoint(CGPoint(x: columnXPoint(0), y: height))
+        clippingPath.addClip()
+        //剪裁区域填充颜色
+         //
+        let highestYPoint = columnYPoint(maxValue!)
+        startPoint = CGPoint(x:margin, y: highestYPoint)
+        endPoint = CGPoint(x:margin, y:self.bounds.height)
+        
+        CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, CGGradientDrawingOptions.DrawsAfterEndLocation)
+        //获取保存的上下文
+        CGContextRestoreGState(context)
+        //添加折点圆角
+        for i in 0..<graphPoints.count {
+            var point = CGPoint(x: columnXPoint(i), y: columnYPoint(graphPoints[i]))
+            point.x -= 5.0/2
+            point.y -= 5.0/2
+            let circle = UIBezierPath(ovalInRect: CGRect(origin: point, size: CGSize(width: 5.0, height: 5.0)))
+            circle.fill()
+        }
+        
+        //绘制三条线
+        var linePath = UIBezierPath()
+        
+        linePath.moveToPoint(CGPoint(x: margin, y: topBorder))
+        linePath.addLineToPoint(CGPoint(x: width - margin, y: topBorder))
+        
+        linePath.moveToPoint(CGPoint(x: margin, y: graphHeight/2 + topBorder))
+        linePath.addLineToPoint(CGPoint(x: width - margin, y: graphHeight/2 + topBorder))
+        
+        linePath.moveToPoint(CGPoint(x: margin, y: height - bottomBorder))
+        linePath.addLineToPoint(CGPoint(x: width - margin, y: height - bottomBorder))
+        let color = UIColor(white: 1.0, alpha: 0.3)
+        color.setStroke()
+        linePath.lineWidth = 1.0
+        linePath.stroke()
+        
     }
 }
