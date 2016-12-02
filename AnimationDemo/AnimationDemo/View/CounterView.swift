@@ -74,6 +74,32 @@ class CounterView: UIView {
         outlineColor.setStroke()
         outlinePath.lineWidth = 5.0
         outlinePath.stroke()
+        //计数器查看标记
+        let context = UIGraphicsGetCurrentContext()
+        //保存原始状态
+        CGContextSaveGState(context)
+        outlineColor.setFill()
         
+        let markerWidth:CGFloat = 5.0
+        let markerSize:CGFloat = 10.0
+        //定位左上角的矩形标记
+        let markerPath = UIBezierPath(rect: CGRect(x: -markerWidth/2, y: 0, width: markerWidth, height: markerSize))
+        //移动到左上方到以前的中心位置
+        CGContextTranslateCTM(context, rect.width/2, rect.height/2)
+        for i in 1...NoOfGlasses {
+            //在中心的背景
+            CGContextSaveGState(context)
+            //计算旋转角度
+            let angle = arcLengthPerGlass * CGFloat(i) + startAngle - π/2
+            //旋转和平移
+            CGContextRotateCTM(context, angle)
+            CGContextTranslateCTM(context, 0, rect.height/2 - markerSize)
+            //矩形填充
+            markerPath.fill()
+            //恢复背景的
+            CGContextRestoreGState(context)
+        }
+        //恢复原来的状态，
+        CGContextRestoreGState(context)
     }
 }
