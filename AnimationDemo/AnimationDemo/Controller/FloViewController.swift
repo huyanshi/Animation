@@ -38,10 +38,12 @@ class FloViewController: BaseViewController {
         view.addSubview(coutainerView)
         coutainerView.snp_makeConstraints { (make) -> Void in
             make.centerX.equalTo(0)
-            make.width.height.equalTo(300)
+            make.width.equalTo(300)
+            make.height.equalTo(250)
             make.top.equalTo(100)
             
         }
+        coutainerView.counterViewTap()
                 // Do any additional setup after loading the view.
     }
 

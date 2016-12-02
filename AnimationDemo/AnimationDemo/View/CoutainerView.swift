@@ -28,8 +28,19 @@ class CoutainerView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    private func setupGraphDisplay(){
+        
+        let noOfDays:Int = 7
+        
+        graphView.graphPoints[graphView.graphPoints.count-1] = counterView.counter
+        
+        graphView.setNeedsDisplay()
+        
+        
+    }
+
     private func setSubview(){
-        backgroundColor = UIColor.yellowColor()
+        backgroundColor = UIColor.whiteColor()
         counterView = CounterView()
         graphView = GraphView()
         addSubview(graphView)
@@ -39,8 +50,7 @@ class CoutainerView: UIView {
             make.width.height.equalTo(230)
         }
         graphView.snp_makeConstraints { (make) -> Void in
-            make.centerX.equalTo(0)
-            make.top.equalTo(25)
+            make.center.equalTo(0)
             make.width.equalTo(300)
             make.height.equalTo(250)
         }
