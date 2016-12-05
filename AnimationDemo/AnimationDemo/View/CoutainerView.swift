@@ -40,7 +40,7 @@ class CoutainerView: UIView {
     }
 
     private func setSubview(){
-        backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.clearColor()
         counterView = CounterView()
         graphView = GraphView()
         addSubview(graphView)

@@ -32,7 +32,7 @@ class CounterView: UIView {
         countLabel = UILabel()
         countLabel.font = UIFont.systemFontOfSize(36)
         countLabel.textColor = UIColor.blackColor()
-        countLabel.text = "8"
+        countLabel.text = "\(counter)"
         addSubview(countLabel)
         countLabel.snp_makeConstraints { (make) -> Void in
             make.center.equalTo(0)

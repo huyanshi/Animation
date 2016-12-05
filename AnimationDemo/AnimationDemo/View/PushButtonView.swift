@@ -33,7 +33,7 @@ class PushButtonView: UIButton {
     init(isAddButton:Bool = true){
         super.init(frame: CGRectZero)
         self.isAddButton = isAddButton
-        backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.clearColor()
     }
     override func drawRect(rect: CGRect) {
         let path = UIBezierPath(ovalInRect: rect)
