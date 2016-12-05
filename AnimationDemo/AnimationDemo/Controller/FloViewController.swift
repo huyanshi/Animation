@@ -16,6 +16,7 @@ class FloViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view = BackgroundView()
         let subtractBtn = PushButtonView(isAddButton: false)
         subtractBtn.isAddButton = false
         subtractBtn.addTarget(self, action: "btnPushButton:", forControlEvents: UIControlEvents.TouchUpInside)

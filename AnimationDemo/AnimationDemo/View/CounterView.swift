@@ -28,7 +28,7 @@ class CounterView: UIView {
     var countLabel:UILabel!
     init(){
         super.init(frame: CGRectZero)
-        backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.clearColor()
         countLabel = UILabel()
         countLabel.font = UIFont.systemFontOfSize(36)
         countLabel.textColor = UIColor.blackColor()

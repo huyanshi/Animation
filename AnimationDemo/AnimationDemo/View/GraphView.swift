@@ -63,7 +63,7 @@ class GraphView: UIView {
         maxLabel = UILabel()
         maxLabel.font = textFont
         maxLabel.textColor = UIColor.whiteColor()
-        maxLabel.text = "\(graphPoints.maxElement())"
+        maxLabel.text = "\(graphPoints.maxElement()!)"
         addSubview(maxLabel)
         maxLabel.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(topBorder-7)
