@@ -69,5 +69,13 @@ let numberOneAttributes = [
 numberOne.drawInRect(numberOneRect,
     withAttributes:numberOneAttributes)
 
+//阴影
+CGContextBeginTransparencyLayer(context, nil)
+let shadow:UIColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
+let shadowOffset = CGSize(width: 2.0, height: 2.0)
+let shadowBlurRadius:CGFloat = 5
+CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, shadow.CGColor)
+
+CGContextEndTransparencyLayer(context)
 let image = UIGraphicsGetImageFromCurrentImageContext()
 UIGraphicsEndImageContext()
