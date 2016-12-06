@@ -16,6 +16,8 @@ class CoutainerView: UIView {
     
     var counter:Int = 0{
         didSet {
+            if counter < 0 {counter = 0}
+            if counter > 8 {counter = 8}
             counterView.counter = self.counter
         }
     }

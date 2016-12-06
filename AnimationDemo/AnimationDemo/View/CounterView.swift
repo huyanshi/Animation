@@ -21,11 +21,13 @@ class CounterView: UIView {
                 setNeedsDisplay()
             }
             countLabel.text = String(self.counter)
+            checkTotal()
         }
     }
     var outlineColor:UIColor = UIColor.RGB(r: 30, g: 77, b: 71)
     var counterColor:UIColor = UIColor.RGB(r: 62, g: 158, b: 149)
     var countLabel:UILabel!
+    private var medalView:MedalView!
     init(){
         super.init(frame: CGRectZero)
         backgroundColor = UIColor.clearColor()
@@ -37,12 +39,26 @@ class CounterView: UIView {
         countLabel.snp_makeConstraints { (make) -> Void in
             make.center.equalTo(0)
         }
+        medalView = MedalView()
+        medalView.contentMode = .ScaleAspectFit
+        addSubview(medalView)
+        medalView.snp_makeConstraints { (make) -> Void in
+            make.width.height.equalTo(80)
+            make.centerX.equalTo(0)
+            make.bottom.equalTo(0)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+    func checkTotal(){
+        if counter >= 8 {
+            medalView.showMedal(true)
+        }else {
+            medalView.showMedal(false)
+        }
+    }
     override func drawRect(rect: CGRect) {
         let center = CGPoint(x: bounds.width/2, y: bounds.height/2)
         
