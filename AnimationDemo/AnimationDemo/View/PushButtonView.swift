@@ -31,12 +31,12 @@ class PushButtonView: UIButton {
         super.init(coder: aDecoder)
     }
     init(isAddButton:Bool = true){
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.isAddButton = isAddButton
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
     }
-    override func drawRect(rect: CGRect) {
-        let path = UIBezierPath(ovalInRect: rect)
+    override func draw(_ rect: CGRect) {
+        let path = UIBezierPath(ovalIn: rect)
         fillColor.setFill()
         path.fill()
         
@@ -46,16 +46,16 @@ class PushButtonView: UIButton {
         
         let plusPath = UIBezierPath()
         plusPath.lineWidth = plusHeight
-        plusPath.moveToPoint(CGPoint(x: bounds.width/2 - plusWidth/2 + 0.5, y: bounds.height/2 + 0.5))
-        plusPath.addLineToPoint(CGPoint(x: bounds.width/2 + plusWidth/2 + 0.5, y: bounds.height/2 + 0.5))
+        plusPath.move(to: CGPoint(x: bounds.width/2 - plusWidth/2 + 0.5, y: bounds.height/2 + 0.5))
+        plusPath.addLine(to: CGPoint(x: bounds.width/2 + plusWidth/2 + 0.5, y: bounds.height/2 + 0.5))
         
         if isAddButton {
-        plusPath.moveToPoint(CGPoint(x: bounds.width/2 + 0.5, y: bounds.height/2 - plusWidth/2 + 0.5))
-        plusPath.addLineToPoint(CGPoint(x: bounds.width/2 + 0.5, y: bounds.height/2 + plusWidth/2 + 0.5))
+        plusPath.move(to: CGPoint(x: bounds.width/2 + 0.5, y: bounds.height/2 - plusWidth/2 + 0.5))
+        plusPath.addLine(to: CGPoint(x: bounds.width/2 + 0.5, y: bounds.height/2 + plusWidth/2 + 0.5))
             
         }
         
-        UIColor.whiteColor().setStroke()
+        UIColor.white.setStroke()
         plusPath.stroke()
     }
 

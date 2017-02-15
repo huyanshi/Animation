@@ -17,13 +17,13 @@ class BackgroundView: UIView {
     
     
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         
         let context = UIGraphicsGetCurrentContext()
         
-        CGContextSetFillColorWithColor(context, darkColor.CGColor)
+        context?.setFillColor(darkColor.cgColor)
         
-        CGContextFillRect(context, rect)
+        context?.fill(rect)
         
         let drawSize = CGSize(width: patternSize, height: patternSize)
         
@@ -31,35 +31,35 @@ class BackgroundView: UIView {
         let drawingContext = UIGraphicsGetCurrentContext()
         //
         darkColor.setFill()
-        CGContextFillRect(drawingContext, CGRect(x: 0, y: 0, width: drawSize.width, height: drawSize.height))
+        drawingContext?.fill(CGRect(x: 0, y: 0, width: drawSize.width, height: drawSize.height))
         
         let trianglePath = UIBezierPath()
         //1
-        trianglePath.moveToPoint(CGPoint(x: drawSize.width/2, y: 0))
+        trianglePath.move(to: CGPoint(x: drawSize.width/2, y: 0))
         //2
-        trianglePath.addLineToPoint(CGPoint(x: 0, y: drawSize.height/2))
+        trianglePath.addLine(to: CGPoint(x: 0, y: drawSize.height/2))
         //3
-        trianglePath.addLineToPoint(CGPoint(x: drawSize.width, y: drawSize.height/2))
+        trianglePath.addLine(to: CGPoint(x: drawSize.width, y: drawSize.height/2))
         //4
-        trianglePath.moveToPoint(CGPoint(x: 0, y: drawSize.height/2))
+        trianglePath.move(to: CGPoint(x: 0, y: drawSize.height/2))
         //5
-        trianglePath.addLineToPoint(CGPoint(x: drawSize.width/2, y: drawSize.height))
+        trianglePath.addLine(to: CGPoint(x: drawSize.width/2, y: drawSize.height))
         //6
-        trianglePath.addLineToPoint(CGPoint(x: 0, y: drawSize.height))
+        trianglePath.addLine(to: CGPoint(x: 0, y: drawSize.height))
         //7
-        trianglePath.moveToPoint(CGPoint(x: drawSize.width, y: drawSize.height/2))
+        trianglePath.move(to: CGPoint(x: drawSize.width, y: drawSize.height/2))
         //8
-        trianglePath.addLineToPoint(CGPoint(x: drawSize.width/2, y: drawSize.height))
+        trianglePath.addLine(to: CGPoint(x: drawSize.width/2, y: drawSize.height))
         //9
-        trianglePath.addLineToPoint(CGPoint(x: drawSize.width, y: drawSize.height))
+        trianglePath.addLine(to: CGPoint(x: drawSize.width, y: drawSize.height))
         lightColor.setFill()
         trianglePath.fill()
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        UIColor(patternImage: image).setFill()
-        CGContextFillRect(context, rect)
+        UIColor(patternImage: image!).setFill()
+        context?.fill(rect)
     }
    
 

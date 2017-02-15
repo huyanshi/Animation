@@ -10,8 +10,8 @@ import UIKit
 
 class CoutainerView: UIView {
     
-    private var counterView:CounterView!
-    private var graphView:GraphView!
+    fileprivate var counterView:CounterView!
+    fileprivate var graphView:GraphView!
     var isGraphViewShowing = false
     
     var counter:Int = 0{
@@ -23,14 +23,14 @@ class CoutainerView: UIView {
     }
     
     init(){
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         setSubview()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    private func setupGraphDisplay(){
+    fileprivate func setupGraphDisplay(){
         
         let noOfDays:Int = 7
         
@@ -41,8 +41,8 @@ class CoutainerView: UIView {
         
     }
 
-    private func setSubview(){
-        backgroundColor = UIColor.clearColor()
+    fileprivate func setSubview(){
+        backgroundColor = UIColor.clear
         counterView = CounterView()
         graphView = GraphView()
         addSubview(graphView)
@@ -56,13 +56,13 @@ class CoutainerView: UIView {
             make.width.equalTo(300)
             make.height.equalTo(250)
         }
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("counterViewTap")))
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CoutainerView.counterViewTap)))
     }
     func counterViewTap(){
         if isGraphViewShowing {
-            UIView.transitionFromView(graphView, toView: counterView, duration: 1.0, options: [UIViewAnimationOptions.TransitionFlipFromLeft,UIViewAnimationOptions.ShowHideTransitionViews], completion: nil)
+            UIView.transition(from: graphView, to: counterView, duration: 1.0, options: [UIViewAnimationOptions.transitionFlipFromLeft,UIViewAnimationOptions.showHideTransitionViews], completion: nil)
         } else {
-            UIView.transitionFromView(counterView, toView: graphView, duration: 1.0, options: [UIViewAnimationOptions.TransitionFlipFromRight, UIViewAnimationOptions.ShowHideTransitionViews], completion: nil)
+            UIView.transition(from: counterView, to: graphView, duration: 1.0, options: [UIViewAnimationOptions.transitionFlipFromRight, UIViewAnimationOptions.showHideTransitionViews], completion: nil)
         }
         isGraphViewShowing = !isGraphViewShowing
     }

@@ -19,7 +19,7 @@ class FloViewController: BaseViewController {
         view = BackgroundView()
         let subtractBtn = PushButtonView(isAddButton: false)
         subtractBtn.isAddButton = false
-        subtractBtn.addTarget(self, action: "btnPushButton:", forControlEvents: UIControlEvents.TouchUpInside)
+        subtractBtn.addTarget(self, action: #selector(FloViewController.btnPushButton(_:)), for: UIControlEvents.touchUpInside)
         view.addSubview(subtractBtn)
         subtractBtn.snp_makeConstraints { (make) -> Void in
             make.centerX.equalTo(0)
@@ -28,7 +28,7 @@ class FloViewController: BaseViewController {
         }
 
         let plusButton = PushButtonView(isAddButton: true)
-        plusButton.addTarget(self, action: "btnPushButton:", forControlEvents: UIControlEvents.TouchUpInside)
+        plusButton.addTarget(self, action: #selector(FloViewController.btnPushButton(_:)), for: UIControlEvents.touchUpInside)
         view.addSubview(plusButton)
         plusButton.snp_makeConstraints { (make) -> Void in
             make.centerX.equalTo(0)
@@ -53,11 +53,11 @@ class FloViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func btnPushButton(button:PushButtonView) {
+    func btnPushButton(_ button:PushButtonView) {
         if button.isAddButton {
-            coutainerView.counter++
+            coutainerView.counter += 1
         }else {
-            coutainerView.counter--
+            coutainerView.counter -= 1
         }
         if coutainerView.isGraphViewShowing {
             coutainerView.counterViewTap()

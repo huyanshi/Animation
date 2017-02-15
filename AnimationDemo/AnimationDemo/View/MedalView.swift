@@ -12,7 +12,7 @@ class MedalView: UIImageView {
     
     lazy var medalImage:UIImage = self.createMedalImage()
     
-    func showMedal(show:Bool){
+    func showMedal(_ show:Bool){
         if show {
             image = medalImage
         }else {
@@ -33,12 +33,12 @@ class MedalView: UIImageView {
         
         //Lower Ribbon
         var lowerRibbonPath = UIBezierPath()
-        lowerRibbonPath.moveToPoint(CGPointMake(0, 0))
-        lowerRibbonPath.addLineToPoint(CGPointMake(40,0))
-        lowerRibbonPath.addLineToPoint(CGPointMake(78, 70))
-        lowerRibbonPath.addLineToPoint(CGPointMake(38, 70))
-        lowerRibbonPath.closePath()
-        UIColor.redColor().setFill()
+        lowerRibbonPath.move(to: CGPoint(x: 0, y: 0))
+        lowerRibbonPath.addLine(to: CGPoint(x: 40,y: 0))
+        lowerRibbonPath.addLine(to: CGPoint(x: 78, y: 70))
+        lowerRibbonPath.addLine(to: CGPoint(x: 38, y: 70))
+        lowerRibbonPath.close()
+        UIColor.red.setFill()
         lowerRibbonPath.fill()
         //丝带
         var claspPath = UIBezierPath(roundedRect: CGRect(x: 36, y: 62, width: 43, height: 20), cornerRadius: 5)
@@ -47,59 +47,59 @@ class MedalView: UIImageView {
         claspPath.stroke()
         
         //Medallion
-        var medallionPath = UIBezierPath(ovalInRect: CGRect(x: 8, y: 72, width: 100, height: 100))
+        var medallionPath = UIBezierPath(ovalIn: CGRect(x: 8, y: 72, width: 100, height: 100))
         //保存当前上下文状态
-        CGContextSaveGState(context)
+        context?.saveGState()
         medallionPath.addClip()
+        //[darkGoldColor.cgColor,midGoldColor.cgColor , lightGoldColor.cgColor]
+        let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: [darkGoldColor.cgColor,midGoldColor.cgColor , lightGoldColor.cgColor] as! CFArray , locations: [0,0.51,1])
+        context?.drawLinearGradient(gradient!, start: CGPoint(x: 40, y: 40), end: CGPoint(x: 40, y: 160), options: CGGradientDrawingOptions.drawsAfterEndLocation)
         
-        let gradient = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(), [darkGoldColor.CGColor,midGoldColor.CGColor,lightGoldColor.CGColor], [0,0.51,1])
-        CGContextDrawLinearGradient(context, gradient, CGPoint(x: 40, y: 40), CGPoint(x: 40, y: 160), CGGradientDrawingOptions.DrawsAfterEndLocation)
+        context?.restoreGState()
         
-        CGContextRestoreGState(context)
-        
-        var transform = CGAffineTransformMakeScale(0.8, 0.8)
-        transform = CGAffineTransformTranslate(transform, 15, 30)
+        var transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        transform = transform.translatedBy(x: 15, y: 30)
         
         medallionPath.lineWidth = 2.0
         
-        medallionPath.applyTransform(transform)
+        medallionPath.apply(transform)
         medallionPath.stroke()
         
         //Upper Ribbon
         var upperRibbonPath = UIBezierPath()
-        upperRibbonPath.moveToPoint(CGPointMake(68, 0))
-        upperRibbonPath.addLineToPoint(CGPointMake(108, 0))
-        upperRibbonPath.addLineToPoint(CGPointMake(78, 70))
-        upperRibbonPath.addLineToPoint(CGPointMake(38, 70))
-        upperRibbonPath.closePath()
+        upperRibbonPath.move(to: CGPoint(x: 68, y: 0))
+        upperRibbonPath.addLine(to: CGPoint(x: 108, y: 0))
+        upperRibbonPath.addLine(to: CGPoint(x: 78, y: 70))
+        upperRibbonPath.addLine(to: CGPoint(x: 38, y: 70))
+        upperRibbonPath.close()
         
-        UIColor.blueColor().setFill()
+        UIColor.blue.setFill()
         upperRibbonPath.fill()
         
         //绘制文字
         //只有NSString才能使用drawInRect()
         let numberOne = "1"
-        let numberOneRect = CGRectMake(47, 100, 50, 50)
+        let numberOneRect = CGRect(x: 47, y: 100, width: 50, height: 50)
         let font = UIFont(name: "Academy Engraved LET", size: 60)
-        let textStyle = NSMutableParagraphStyle.defaultParagraphStyle()
+        let textStyle = NSMutableParagraphStyle.default
         let numberOneAttributes = [
             NSFontAttributeName: font!,
             NSForegroundColorAttributeName: darkGoldColor]
-        numberOne.drawInRect(numberOneRect,
+        numberOne.draw(in: numberOneRect,
             withAttributes:numberOneAttributes)
         
         //阴影
-        CGContextBeginTransparencyLayer(context, nil)
-        let shadow:UIColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
+        context?.beginTransparencyLayer(auxiliaryInfo: nil)
+        let shadow:UIColor = UIColor.black.withAlphaComponent(0.8)
         let shadowOffset = CGSize(width: 2.0, height: 2.0)
         let shadowBlurRadius:CGFloat = 5
-        CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, shadow.CGColor)
+        context?.setShadow(offset: shadowOffset, blur: shadowBlurRadius, color: shadow.cgColor)
         
-        CGContextEndTransparencyLayer(context)
+        context?.endTransparencyLayer()
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return image
+        return image!
     }
 
 }

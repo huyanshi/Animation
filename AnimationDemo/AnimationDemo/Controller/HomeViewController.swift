@@ -10,7 +10,7 @@ import UIKit
 
 class HomeViewController: BaseViewController {
     
-    private let  dataArr:[String] = ["Flo"]
+    fileprivate let  dataArr:[String] = ["Flo"]
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Animation"
@@ -23,11 +23,11 @@ class HomeViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private lazy var tableView:UITableView = {
-       let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREENW, height: SCREENH), style: UITableViewStyle.Plain)
+    fileprivate lazy var tableView:UITableView = {
+       let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREENW, height: SCREENH), style: UITableViewStyle.plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         tableView.tableFooterView = UIView()
         return tableView
     }()
@@ -35,18 +35,18 @@ class HomeViewController: BaseViewController {
     
 }
 extension HomeViewController:UITableViewDelegate,UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataArr.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MyCell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
         cell.textLabel?.text = dataArr[indexPath.row]
-        cell.textLabel?.font = UIFont.systemFontOfSize(16)
-        cell.textLabel?.textColor = UIColor.blackColor()
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        cell.textLabel?.textColor = UIColor.black
         return cell
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 0:
             navigationController?.pushViewController(FloViewController(), animated: true)

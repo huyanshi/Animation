@@ -17,14 +17,14 @@ class GraphView: UIView {
     var graphPoints:[Int] = [4, 2, 6, 4, 5, 8, 3]
     
     //平均值
-    private var waterDrunk:UILabel!
-    private var averageWaterDrunk:UILabel!
-    private var maxLabel:UILabel!
-    private var minLabel:UILabel!
+    fileprivate var waterDrunk:UILabel!
+    fileprivate var averageWaterDrunk:UILabel!
+    fileprivate var maxLabel:UILabel!
+    fileprivate var minLabel:UILabel!
 
     init(){
-        super.init(frame: CGRectZero)
-        backgroundColor = UIColor.yellowColor()
+        super.init(frame: CGRect.zero)
+        backgroundColor = UIColor.yellow
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,15 +34,15 @@ class GraphView: UIView {
         super.layoutSubviews()
         setupGraphDisplay()
     }
-    private func setupGraphDisplay(){
+    fileprivate func setupGraphDisplay(){
         let margin:CGFloat = 20.0
         let topBorder:CGFloat = 60
         let bottomBorder:CGFloat = 50
-        let textFont = UIFont.systemFontOfSize(14)
+        let textFont = UIFont.systemFont(ofSize: 14)
         waterDrunk = UILabel()
         waterDrunk.text = "Water Drunk"
         waterDrunk.font = textFont
-        waterDrunk.textColor = UIColor.whiteColor()
+        waterDrunk.textColor = UIColor.white
         addSubview(waterDrunk)
         waterDrunk.snp_makeConstraints { (make) -> Void in
             make.left.equalTo(margin)
@@ -51,8 +51,8 @@ class GraphView: UIView {
         averageWaterDrunk = UILabel()
         averageWaterDrunk.text = "Average:"
         averageWaterDrunk.font = textFont
-        averageWaterDrunk.textColor = UIColor.whiteColor()
-        let average = graphPoints.reduce(0, combine: +) / graphPoints.count
+        averageWaterDrunk.textColor = UIColor.white
+        let average = graphPoints.reduce(0, +) / graphPoints.count
         averageWaterDrunk.text! += "\(average)"
         addSubview(averageWaterDrunk)
         averageWaterDrunk.snp_makeConstraints { (make) -> Void in
@@ -62,8 +62,8 @@ class GraphView: UIView {
         
         maxLabel = UILabel()
         maxLabel.font = textFont
-        maxLabel.textColor = UIColor.whiteColor()
-        maxLabel.text = "\(graphPoints.maxElement()!)"
+        maxLabel.textColor = UIColor.white
+        maxLabel.text = "\(graphPoints.max()!)"
         addSubview(maxLabel)
         maxLabel.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(topBorder-7)
@@ -72,7 +72,7 @@ class GraphView: UIView {
         
         minLabel = UILabel()
         minLabel.font = textFont
-        minLabel.textColor = UIColor.whiteColor()
+        minLabel.textColor = UIColor.white
         minLabel.text = "0"
         addSubview(minLabel)
         minLabel.snp_makeConstraints { (make) -> Void in
@@ -81,10 +81,10 @@ class GraphView: UIView {
         }
         
         //添加底部时间
-        let dateFormatter = NSDateFormatter()
-        let calendat = NSCalendar.currentCalendar()
-        let componentOptions:NSCalendarUnit = .Weekday
-        let components = calendat.components(componentOptions, fromDate: NSDate())
+        let dateFormatter = DateFormatter()
+        let calendat = Calendar.current
+        let componentOptions:NSCalendar.Unit = .weekday
+        let components = (calendat as NSCalendar).components(componentOptions, from: Date())
         var weekday = components.weekday
         
         let days = ["S", "S", "M", "T", "W", "T", "F"]
@@ -97,15 +97,17 @@ class GraphView: UIView {
             return x
         }
 
-        for i in (0...days.count).reverse() {
+        for i in (0...days.count).reversed() {
             let dateLabel = UILabel()
-            dateLabel.textColor = UIColor.whiteColor()
+            dateLabel.textColor = UIColor.white
             dateLabel.font = textFont
             if weekday == 7 {
                 weekday = 0
             }
-            dateLabel.text = days[weekday--]
-            if weekday < 0 {
+            
+            dateLabel.text = days[weekday!]
+            weekday = weekday! - 1
+            if weekday! < 0 {
                 weekday = days.count - 1
             }
             addSubview(dateLabel)
@@ -118,30 +120,30 @@ class GraphView: UIView {
         
     }
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         let width = rect.width
         let height = rect.height
         //设置圆角
-        var path = UIBezierPath(roundedRect: rect, byRoundingCorners: UIRectCorner.AllCorners, cornerRadii: CGSize(width: 8, height: 8))
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: UIRectCorner.allCorners, cornerRadii: CGSize(width: 8, height: 8))
         path.addClip()
         //获取当前上线文
         let context = UIGraphicsGetCurrentContext()
-        let colors = [startColor.CGColor,endColor.CGColor]
+        let colors = [startColor.cgColor,endColor.cgColor]
         //设置色彩空间
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         //设置颜色区域
         let colorLocations:[CGFloat] = [0.0, 1.0]
         //创建渐变
-        let gradient = CGGradientCreateWithColors(colorSpace, colors, colorLocations)
+        let gradient = CGGradient(colorsSpace: colorSpace, colors: colors as CFArray, locations: colorLocations)
         
         var startPoint = CGPoint.zero
         var endPoint = CGPoint(x: 0, y: self.bounds.height)
         //绘制渐变
-        CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, CGGradientDrawingOptions.DrawsAfterEndLocation)
+        context?.drawLinearGradient(gradient!, start: startPoint, end: endPoint, options: CGGradientDrawingOptions.drawsAfterEndLocation)
         
         let margin:CGFloat = 20.0
         //计算X点
-        var columnXPoint = { (column:Int) -> CGFloat in
+        let columnXPoint = { (column:Int) -> CGFloat in
             //计算两点的距离
             let spacer = (width - margin*2 - 4) / CGFloat((self.graphPoints.count - 1))
             var x:CGFloat = CGFloat(column) * spacer
@@ -152,32 +154,32 @@ class GraphView: UIView {
         let topBorder:CGFloat = 60
         let bottomBorder:CGFloat = 50
         let graphHeight = height - topBorder - bottomBorder
-        let maxValue = graphPoints.maxElement()
-        var columnYPoint = { (graphPoint:Int) -> CGFloat in
+        let maxValue = graphPoints.max()
+        let columnYPoint = { (graphPoint:Int) -> CGFloat in
             var y:CGFloat = CGFloat(graphPoint) / CGFloat(maxValue!) * graphHeight
             y = graphHeight + topBorder - y
             return y
         }
         
         //划线
-        UIColor.whiteColor().setFill()
-        UIColor.whiteColor().setStroke()
+        UIColor.white.setFill()
+        UIColor.white.setStroke()
         
-        var graphPath = UIBezierPath()
-        graphPath.moveToPoint(CGPoint(x: columnXPoint(0), y: columnYPoint(graphPoints[0])))
+        let graphPath = UIBezierPath()
+        graphPath.move(to: CGPoint(x: columnXPoint(0), y: columnYPoint(graphPoints[0])))
             for i in 1..<graphPoints.count {
             let nextPoint = CGPoint(x: columnXPoint(i), y: columnYPoint(graphPoints[i]))
-                graphPath.addLineToPoint(nextPoint)
+                graphPath.addLine(to: nextPoint)
         }
         graphPath.lineWidth = 2.0
         graphPath.stroke()
         //保存当前上下文状态
-        CGContextSaveGState(context)
+        context?.saveGState()
         // 一下代码是上下文剪裁的区域
-        var clippingPath = graphPath.copy() as! UIBezierPath
+        let clippingPath = graphPath.copy() as! UIBezierPath
         
-        clippingPath.addLineToPoint(CGPoint(x: columnXPoint(graphPoints.count-1), y: height))
-        clippingPath.addLineToPoint(CGPoint(x: columnXPoint(0), y: height))
+        clippingPath.addLine(to: CGPoint(x: columnXPoint(graphPoints.count-1), y: height))
+        clippingPath.addLine(to: CGPoint(x: columnXPoint(0), y: height))
         clippingPath.addClip()
         //剪裁区域填充颜色
          //
@@ -185,29 +187,29 @@ class GraphView: UIView {
         startPoint = CGPoint(x:margin, y: highestYPoint)
         endPoint = CGPoint(x:margin, y:self.bounds.height)
         
-        CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, CGGradientDrawingOptions.DrawsAfterEndLocation)
+        context?.drawLinearGradient(gradient!, start: startPoint, end: endPoint, options: CGGradientDrawingOptions.drawsAfterEndLocation)
         //获取保存的上下文
-        CGContextRestoreGState(context)
+        context?.restoreGState()
         //添加折点圆角
         for i in 0..<graphPoints.count {
             var point = CGPoint(x: columnXPoint(i), y: columnYPoint(graphPoints[i]))
             point.x -= 5.0/2
             point.y -= 5.0/2
-            let circle = UIBezierPath(ovalInRect: CGRect(origin: point, size: CGSize(width: 5.0, height: 5.0)))
+            let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize(width: 5.0, height: 5.0)))
             circle.fill()
         }
         
         //绘制三条线
-        var linePath = UIBezierPath()
+        let linePath = UIBezierPath()
         
-        linePath.moveToPoint(CGPoint(x: margin, y: topBorder))
-        linePath.addLineToPoint(CGPoint(x: width - margin, y: topBorder))
+        linePath.move(to: CGPoint(x: margin, y: topBorder))
+        linePath.addLine(to: CGPoint(x: width - margin, y: topBorder))
         
-        linePath.moveToPoint(CGPoint(x: margin, y: graphHeight/2 + topBorder))
-        linePath.addLineToPoint(CGPoint(x: width - margin, y: graphHeight/2 + topBorder))
+        linePath.move(to: CGPoint(x: margin, y: graphHeight/2 + topBorder))
+        linePath.addLine(to: CGPoint(x: width - margin, y: graphHeight/2 + topBorder))
         
-        linePath.moveToPoint(CGPoint(x: margin, y: height - bottomBorder))
-        linePath.addLineToPoint(CGPoint(x: width - margin, y: height - bottomBorder))
+        linePath.move(to: CGPoint(x: margin, y: height - bottomBorder))
+        linePath.addLine(to: CGPoint(x: width - margin, y: height - bottomBorder))
         let color = UIColor(white: 1.0, alpha: 0.3)
         color.setStroke()
         linePath.lineWidth = 1.0

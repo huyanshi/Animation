@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 /// 屏幕宽度
-let SCREENW = UIScreen.mainScreen().bounds.size.width
+let SCREENW = UIScreen.main.bounds.size.width
 /// 屏幕高度
-let SCREENH = UIScreen.mainScreen().bounds.size.height
+let SCREENH = UIScreen.main.bounds.size.height
 /// 屏幕三围
-let SCREENBOUNDS = UIScreen.mainScreen().bounds
+let SCREENBOUNDS = UIScreen.main.bounds
 

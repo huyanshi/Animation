@@ -27,20 +27,20 @@ class CounterView: UIView {
     var outlineColor:UIColor = UIColor.RGB(r: 30, g: 77, b: 71)
     var counterColor:UIColor = UIColor.RGB(r: 62, g: 158, b: 149)
     var countLabel:UILabel!
-    private var medalView:MedalView!
+    fileprivate var medalView:MedalView!
     init(){
-        super.init(frame: CGRectZero)
-        backgroundColor = UIColor.clearColor()
+        super.init(frame: CGRect.zero)
+        backgroundColor = UIColor.clear
         countLabel = UILabel()
-        countLabel.font = UIFont.systemFontOfSize(36)
-        countLabel.textColor = UIColor.blackColor()
+        countLabel.font = UIFont.systemFont(ofSize: 36)
+        countLabel.textColor = UIColor.black
         countLabel.text = "\(counter)"
         addSubview(countLabel)
         countLabel.snp_makeConstraints { (make) -> Void in
             make.center.equalTo(0)
         }
         medalView = MedalView()
-        medalView.contentMode = .ScaleAspectFit
+        medalView.contentMode = .scaleAspectFit
         addSubview(medalView)
         medalView.snp_makeConstraints { (make) -> Void in
             make.width.height.equalTo(80)
@@ -59,7 +59,7 @@ class CounterView: UIView {
             medalView.showMedal(false)
         }
     }
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         let center = CGPoint(x: bounds.width/2, y: bounds.height/2)
         
         let radius:CGFloat = max(bounds.width, bounds.height)
@@ -83,9 +83,9 @@ class CounterView: UIView {
         
         let outlinePath = UIBezierPath(arcCenter: center, radius: bounds.width/2 - 2.5, startAngle: startAngle, endAngle: outlineEndAngle, clockwise: true)
         
-        outlinePath.addArcWithCenter(center, radius: bounds.width/2 - arcWidth + 2.5, startAngle: outlineEndAngle, endAngle: startAngle, clockwise: false)
+        outlinePath.addArc(withCenter: center, radius: bounds.width/2 - arcWidth + 2.5, startAngle: outlineEndAngle, endAngle: startAngle, clockwise: false)
         
-        outlinePath.closePath()
+        outlinePath.close()
         
         outlineColor.setStroke()
         outlinePath.lineWidth = 5.0
@@ -93,7 +93,7 @@ class CounterView: UIView {
         //计数器查看标记
         let context = UIGraphicsGetCurrentContext()
         //保存原始状态
-        CGContextSaveGState(context)
+        context?.saveGState()
         outlineColor.setFill()
         
         let markerWidth:CGFloat = 5.0
@@ -101,21 +101,21 @@ class CounterView: UIView {
         //定位左上角的矩形标记
         let markerPath = UIBezierPath(rect: CGRect(x: -markerWidth/2, y: 0, width: markerWidth, height: markerSize))
         //移动到左上方到以前的中心位置
-        CGContextTranslateCTM(context, rect.width/2, rect.height/2)
+        context?.translateBy(x: rect.width/2, y: rect.height/2)
         for i in 1...NoOfGlasses {
             //在中心的背景
-            CGContextSaveGState(context)
+            context?.saveGState()
             //计算旋转角度
             let angle = arcLengthPerGlass * CGFloat(i) + startAngle - π/2
             //旋转和平移
-            CGContextRotateCTM(context, angle)
-            CGContextTranslateCTM(context, 0, rect.height/2 - markerSize)
+            context?.rotate(by: angle)
+            context?.translateBy(x: 0, y: rect.height/2 - markerSize)
             //矩形填充
             markerPath.fill()
             //恢复背景的
-            CGContextRestoreGState(context)
+            context?.restoreGState()
         }
         //恢复原来的状态，
-        CGContextRestoreGState(context)
+        context?.restoreGState()
     }
 }
